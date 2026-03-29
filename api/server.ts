@@ -7,6 +7,10 @@ const app = express()
 app.use(cors())
 app.use(express.json({ limit: '2mb' }))
 
+// Removendo a parte do app.listen para o Vercel Serverless Functions
+// exportar o app em vez de rodar o servidor na porta
+export default app
+
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
 })
@@ -33,8 +37,10 @@ app.post('/api/analyze', async (req, res) => {
   }
 })
 
-const port = Number(process.env.PORT || 5174)
-app.listen(port, () => {
-  process.stdout.write(`ContractAI API on http://localhost:${port}\n`)
-})
+if (process.env.NODE_ENV !== 'production') {
+  const port = Number(process.env.PORT || 5174)
+  app.listen(port, () => {
+    process.stdout.write(`ContractAI API on http://localhost:${port}\n`)
+  })
+}
 
