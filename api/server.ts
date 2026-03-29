@@ -7,10 +7,6 @@ const app = express()
 app.use(cors())
 app.use(express.json({ limit: '2mb' }))
 
-// Removendo a parte do app.listen para o Vercel Serverless Functions
-// exportar o app em vez de rodar o servidor na porta
-export default app
-
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
 })
@@ -36,6 +32,8 @@ app.post('/api/analyze', async (req, res) => {
     res.status(500).json({ message: 'Falha ao analisar. Tente novamente em instantes.' })
   }
 })
+
+export default app
 
 if (process.env.NODE_ENV !== 'production') {
   const port = Number(process.env.PORT || 5174)
