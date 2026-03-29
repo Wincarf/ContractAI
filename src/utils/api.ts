@@ -1,7 +1,8 @@
 import type { AnalyzeResponse } from '../../shared/types'
 
 export async function analyzeContract(input: { contractText: string }): Promise<AnalyzeResponse> {
-  const resp = await fetch('/api/analyze', {
+  const apiUrl = import.meta.env.PROD ? '/api/server' : '/api/analyze'
+  const resp = await fetch(apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

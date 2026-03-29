@@ -7,15 +7,16 @@
     },
     {
       "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "use": "@vercel/static-build"
     }
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/analyze",
+      "destination": "/api/server.ts"
+    },
+    {
+      "source": "/api/health",
       "destination": "/api/server.ts"
     },
     {
